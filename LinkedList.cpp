@@ -1,4 +1,4 @@
-// В стиле С
+// Самый простой список в стиле С
 #include <iostream>
 
 using namespace std;
