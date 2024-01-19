@@ -1,67 +1,101 @@
+/******************************************************************************
+
+                              Online C++ Compiler.
+               Code, Compile, Run and Debug C++ program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
 #include <iostream>
 #include <random>
+#include <ctime>
+#include <conio.h>
 
 using namespace std;
 
+ 
 
-// -------------- structs ---
-struct Data
+
+struct A
 {
-    int a;
-
+    int key;
 };
-
 struct List
 {
-    Data A;
-    List *next;
+    A data;
+    List* next;
 };
 
+
+int RandData_for_List(unsigned long *seed); // Метод для занесения в список случайных значений для последующей сортировки
+
+
+
+
+void Init(List **begin, int seed, int length, int(*RandData_for_List)(unsigned long *));
+void Print(List *begin, int length);
 
 int main()
 {
+   srand(time(0));
+   
+   List* begin = NULL; // Начало списка (исток)
+   begin = new List;
+   begin->data.key = 0;
+   begin->next = NULL;
+   
+   unsigned long seed  = 1; // Стартовое значение данных для создания выборки рандомных значений в List
+   int length = 3; // Изначальная длинна списка
+   
+   cout << "Пожалуйста, задайте длинну списка или он останется длинной равный 5, по умолчанию" << endl;
+   cin >> length;
+   cout << endl;
+   
+   
+  // Init(*begin, seed, length, int(*RandData_for_List)(unsigned long *));
+  // void Print(List *begin, int length);
+   
+   
+   
+   
 
-   // Вариант определения размера списка №_1
-   /*int N = rand();*/
-
-
-   // Вариант определения размера списка №_2
-   int N(0);
-   cin >> N;
-
-   Data *dataA = new Data[N];
-   for(int i(0); i < N; i++)
-   {
-       Data D;
-       D.a = i;
-       *(dataA) = D;
-       cout << dataA->a << " ";
-       *(dataA + i);
-
-   }
-
-
-
-   List *Begin = NULL;
-   Begin = new List;
-   Begin-> A.a = 11;
-   Begin->next = NULL;
-
-   List *End = new List;
-   End = NULL;
-   End = Begin;
-
-   for(int i(0); i < 5; i++)
-   {
-       End->next = new List;
-       End = End->next;
-       End->A.a = i;
-       End->next = NULL;
-       cout << End->A.a;
-
-   }
-   delete [] dataA;
-
-
+    getch();
     return 0;
+}
+
+int RandData_for_List(unsigned long &seed)
+{
+    seed = seed * 1103515245 + 12345; // Линейный конгруэнтный метод
+    return (seed / 65536) % 32777;    // Возвращаем значение в диапазоне 0 - 32776
+}
+
+
+
+void Init(List **begin, int seed, int length, int (*RandData_for_List)(unsigned long *))
+{
+   
+   for(int i(length - (length - 1)); i <= length; i++)
+   {
+
+   int RandData_for_List(unsigned long &seed);
+   (*begin)->next = new List;
+   (*begin) = (*begin)->next;
+   (*begin)->data.key = seed;
+   (*begin)->next = NULL;
+   
+   };
+   
+}
+
+void Print(List *begin, int length)
+{
+    List *print = begin;
+    
+    for(int i(length - (length - 1)); i <= length; i++)
+    {
+        cout << print->data.key << " -> ";
+        print = print->next;
+    }
+    cout << "NULL";
+    
 }
