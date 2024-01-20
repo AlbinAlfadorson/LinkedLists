@@ -1,11 +1,3 @@
-/******************************************************************************
-
-                              Online C++ Compiler.
-               Code, Compile, Run and Debug C++ program online.
-Write your code in this editor and press "Run" button to compile and execute it.
-
-*******************************************************************************/
-
 #include <iostream>
 #include <random>
 #include <ctime>
@@ -13,8 +5,7 @@ Write your code in this editor and press "Run" button to compile and execute it.
 
 using namespace std;
 
- 
-
+//------------------------------------------------------------------------------------------------------------
 
 struct A
 {
@@ -26,13 +17,13 @@ struct List
     List* next;
 };
 
+//------------------------------------------------------------------------------------------------------------
 
-int RandData_for_List(unsigned long *seed); // Метод для занесения в список случайных значений для последующей сортировки
+int RandData_for_List(unsigned long &seed); // Метод для занесения в список случайных значений для последующей сортировки
 
+//------------------------------------------------------------------------------------------------------------
 
-
-
-void Init(List **begin, int seed, int length, int(*RandData_for_List)(unsigned long *));
+void Init(List **begin, int seed, int length, int(*RandData_for_List)(unsigned long &));
 void Print(List *begin, int length);
 
 int main()
@@ -52,8 +43,8 @@ int main()
    cout << endl;
    
    
-  // Init(*begin, seed, length, int(*RandData_for_List)(unsigned long *));
-  // void Print(List *begin, int length);
+  Init(&begin, seed, length, &RandData_for_List);
+  Print(begin, length);
    
    
    
@@ -63,25 +54,28 @@ int main()
     return 0;
 }
 
+//------------------------------------------------------------------------------------------------------------
+
 int RandData_for_List(unsigned long &seed)
 {
     seed = seed * 1103515245 + 12345; // Линейный конгруэнтный метод
-    return (seed / 65536) % 32777;    // Возвращаем значение в диапазоне 0 - 32776
+    return (seed / 65536) % 32782;    // Возвращаем значение в диапазоне 0 - 32776
 }
 
 
 
-void Init(List **begin, int seed, int length, int (*RandData_for_List)(unsigned long *))
+void Init(List **begin, int seed, int length, int (*RandData_for_List)(unsigned long &))
 {
    
+   List *end = (*begin);
    for(int i(length - (length - 1)); i <= length; i++)
    {
 
    int RandData_for_List(unsigned long &seed);
-   (*begin)->next = new List;
-   (*begin) = (*begin)->next;
-   (*begin)->data.key = seed;
-   (*begin)->next = NULL;
+   end->next = new List;
+   end = end->next;
+   end->data.key = seed;
+   end->next = NULL;
    
    };
    
@@ -98,4 +92,3 @@ void Print(List *begin, int length)
     }
     cout << "NULL";
     
-}
