@@ -6,6 +6,8 @@
 using namespace std;
 
 
+
+
 struct A
 {
     int key;
@@ -16,14 +18,18 @@ struct List
     List* next;
 };
 
-int RandData_for_List(unsigned long& seed); // Метод для занесения в список случайных значений для последующей сортировки
+
+int RandData_for_List(unsigned long& seed, int &i);
 
 
-void Init(List** begin, int seed, int length, int(*RandData_for_List)(unsigned long&));
+
+
+void Init(List** begin, unsigned long &seed, int length, int(*RandData_for_List)(unsigned long&, int &));
 void Print(List* begin, int length);
 
 int main()
 {
+
 
     List* begin = NULL; // Начало списка (исток)
     begin = new List;
@@ -43,33 +49,34 @@ int main()
 
 
 
+
+
     _getch();
     return 0;
 }
 
-int RandData_for_List(unsigned long& seed)
+int RandData_for_List(unsigned long& seed, int &i)
 {
-    srand(time(0));
+    
 
-    seed = rand();
+    seed = (rand() + 1) * (i * (i - 1)) / i;
     return seed;
 }
 
 
 
-void Init(List** begin, int seed, int length, int (*RandData_for_List)(unsigned long&))
+void Init(List** begin, unsigned long &seed, int length, int (*RandData_for_List)(unsigned long & , int & ))
 {
 
     List* end = (*begin);
     for (int i(length - (length - 1)); i <= length; i++)
     {
         
-        //int RandData_for_List(unsigned long& seed);   - Метод рандомизации выборки выбрасывает только единицу, пока что непонятно почему
+        RandData_for_List(seed, i);
 
         end->next = new List;
         end = end->next;
-        end->data.key = (rand() + 1) * (i * (i - 1)) / i; // Метод получения реально случайных чисел, основанный на линейном конгруэнтном методе
-        seed = end->data.key;
+        end->data.key = seed;
         end->next = NULL;
 
     };
