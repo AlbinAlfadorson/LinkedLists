@@ -3,11 +3,8 @@
 #include <ctime>
 #include <conio.h>
 
-//-----------------------------------------------------------------------------------------------------------
-
 using namespace std;
 
-//-----------------------------------------------------------------------------------------------------------
 
 struct A
 {
@@ -27,6 +24,7 @@ int RandData_for_List(unsigned long& seed, int &i);
 
 void Init(List** begin, unsigned long &seed, int length, int(*RandData_for_List)(unsigned long&, int &));
 void add_begin(List** begin, unsigned long& seed, int& length, int(*RandData_for_List)(unsigned long&, int&));
+void Insert(List** begin, unsigned long& seed, int& length, int(*RandData_for_List)(unsigned long&, int&));
 void Print(List* begin, int length);
 
 //-----------------------------------------------------------------------------------------------------------
@@ -53,13 +51,14 @@ int main()
     cout << endl;
     add_begin(&begin, seed, length, &RandData_for_List);
     Print(begin, length);
-
+    Insert(&begin, seed, length, &RandData_for_List);
+    Print(begin, length);
 
     _getch();
     return 0;
 }
 
-//-----------------------------------------------------------------------------------------------------------
+
 
 int RandData_for_List(unsigned long& seed, int &i)
 {
@@ -99,6 +98,49 @@ void add_begin(List** begin, unsigned long& seed, int& length, int(*RandData_for
     (*begin) = past;
     length++;
 
+}
+
+void Insert(List** begin, unsigned long& seed, int& length, int(*RandData_for_List)(unsigned long&, int&))
+{
+    srand(time(NULL));
+    int somedata = (rand() % 10);
+
+    List* INS = new List;
+    INS->data.key = RandData_for_List(seed, somedata);
+    if ((*begin) == NULL)
+    {
+        (*begin) = INS;
+        (*begin)->next = NULL;
+        length++;
+        return;
+
+    };
+    int ins;
+    cout << "Если вы хотите вставить элемент в список, укажите место вставки от " << length - (length - 1) << " до" << length;
+    cout << endl;
+    cin >> ins;
+
+    List* step = new List;
+    step = (*begin);
+    for (int i(0); i < length; i++)
+    {
+        if (i == ins)
+        {
+
+            for (int j(0); j < ins - 1; j++)
+            {
+                step = step->next;
+
+            }
+            INS->next = step;
+            step = INS;
+        }
+
+
+
+    }
+
+    length++;
 }
 
 void Print(List* begin, int length)
