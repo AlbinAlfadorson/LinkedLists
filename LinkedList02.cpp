@@ -3,10 +3,11 @@
 #include <ctime>
 #include <conio.h>
 
+//-----------------------------------------------------------------------------------------------------------
+
 using namespace std;
 
-
-
+//-----------------------------------------------------------------------------------------------------------
 
 struct A
 {
@@ -18,14 +19,17 @@ struct List
     List* next;
 };
 
+//-----------------------------------------------------------------------------------------------------------
 
 int RandData_for_List(unsigned long& seed, int &i);
 
-
-
+//-----------------------------------------------------------------------------------------------------------
 
 void Init(List** begin, unsigned long &seed, int length, int(*RandData_for_List)(unsigned long&, int &));
+void add_begin(List** begin, unsigned long& seed, int& length, int(*RandData_for_List)(unsigned long&, int&));
 void Print(List* begin, int length);
+
+//-----------------------------------------------------------------------------------------------------------
 
 int main()
 {
@@ -46,24 +50,26 @@ int main()
 
     Init(&begin, seed, length, &RandData_for_List);
     Print(begin, length);
-
-
-
+    cout << endl;
+    add_begin(&begin, seed, length, &RandData_for_List);
+    Print(begin, length);
 
 
     _getch();
     return 0;
 }
 
+//-----------------------------------------------------------------------------------------------------------
+
 int RandData_for_List(unsigned long& seed, int &i)
 {
-    
+    srand(time(NULL));
 
-    seed = (rand() + 1) * (i * (i - 1)) / i;
+    seed = rand() / i;
     return seed;
 }
 
-
+//-----------------------------------------------------------------------------------------------------------
 
 void Init(List** begin, unsigned long &seed, int length, int (*RandData_for_List)(unsigned long & , int & ))
 {
@@ -80,6 +86,18 @@ void Init(List** begin, unsigned long &seed, int length, int (*RandData_for_List
         end->next = NULL;
 
     };
+
+}
+
+void add_begin(List** begin, unsigned long& seed, int& length, int(*RandData_for_List)(unsigned long&, int&))
+{
+    srand(time(NULL));
+    List* past = new List;
+    int somedata = (rand() % 10);
+    past->data.key = RandData_for_List(seed, somedata);
+    past->next = (*begin);
+    (*begin) = past;
+    length++;
 
 }
 
