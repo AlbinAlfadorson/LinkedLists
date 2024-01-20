@@ -64,11 +64,11 @@ void Init(List** begin, int seed, int length, int (*RandData_for_List)(unsigned 
     for (int i(length - (length - 1)); i <= length; i++)
     {
         
-        //int RandData_for_List(unsigned long& seed);
+        //int RandData_for_List(unsigned long& seed);   - Метод рандомизации выборки выбрасывает только единицу, пока что непонятно почему
 
         end->next = new List;
         end = end->next;
-        end->data.key = (rand() + 1) * (i * (i - 1)) / i;
+        end->data.key = (rand() + 1) * (i * (i - 1)) / i; // Метод получения реально случайных чисел, основанный на линейном конгруэнтном методе
         seed = end->data.key;
         end->next = NULL;
 
