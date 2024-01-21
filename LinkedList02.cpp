@@ -5,6 +5,7 @@
 
 using namespace std;
 
+//-----------------------------------------------------------------------------------------------------------
 
 struct A
 {
@@ -31,7 +32,7 @@ void Print(List* begin, int length);
 
 int main()
 {
-
+    setlocale(LC_ALL, "Russian");
 
     List* begin = NULL; // Начало списка (исток)
     begin = new List;
@@ -51,6 +52,9 @@ int main()
     cout << endl;
     add_begin(&begin, seed, length, &RandData_for_List);
     Print(begin, length);
+
+    List* step = new List;
+
     Insert(&begin, seed, length, &RandData_for_List);
     Print(begin, length);
 
@@ -116,29 +120,21 @@ void Insert(List** begin, unsigned long& seed, int& length, int(*RandData_for_Li
 
     };
     int ins;
+    cout << endl;
     cout << "Если вы хотите вставить элемент в список, укажите место вставки от " << length - (length - 1) << " до" << length;
     cout << endl;
     cin >> ins;
 
     List* step = new List;
     step = (*begin);
-    for (int i(0); i < length; i++)
+    for (int i(0); i < ins; i++)
     {
-        if (i == ins)
-        {
-
-            for (int j(0); j < ins - 1; j++)
-            {
-                step = step->next;
-
-            }
-            INS->next = step;
-            step = INS;
-        }
-
-
+        step = step->next;
 
     }
+
+    INS->next = step;
+    step = INS;
 
     length++;
 }
